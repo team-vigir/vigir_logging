@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="vigir_ocs_video_record_widget" name="video_record_widget" type="video_record_widget" output="screen">
+    <param name="scripts_location" type="str" value="/home/vigir/vigir_repo/catkin_ws/src/vigir_logging/vigir_ocs_video_record_widget/src/scripts" />
+     <param name="experiment_location" type="str" value="/home/vigir/Experiment" />
+  </node>
+</launch>
