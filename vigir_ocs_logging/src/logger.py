@@ -159,30 +159,12 @@ class App(object):
 		self.pub = rospy.Publisher('/vigir_logging_responce', String, queue_size=1)
 		rospy.spin()
 		
-	def grabLogs(self, time):
-		print "Grabbing robot logs!!"
-		bashCommand = ["/bin/bash", "--norc", "-c"]
-		if(not(self.folder == '')):
-			if not os.path.exists(self.folder):
-				os.makedirs(self.folder)
-			bagCommand = "python atlas_log_downloader.py 192.168.130.103 /" + self.folder + ' ' + str(time)
-		else:
-			if not os.path.exists(self.logLocation + '/BDI_Logs'):
-				os.makedirs(self.logLocation + '/BDI_Logs')	
-			bagCommand = "python atlas_log_downloader.py 192.168.130.103 /" + self.logLocation + '/BDI_Logs ' + str(time)
-		print bagCommand
-		self.bagProcess = subprocess.Popen(bashCommand + [bagCommand], stdout=subprocess.PIPE, preexec_fn=os.setsid)
-		
 
 	def callback(self, data):
 		print "Recieved message!"
 		self.callback_data = data
 		#rospy.loginfo(rospy.get_caller_id() + "I heard %s", self.callback_data.message)
 		#print self.callback_data
-		if(data.bdiLogTime > 0):			
-			if(self.enableBDILogging):
-				self.grabLogs(data.bdiLogTime)
-			return
 		if(not data.no_bags and data.run and self.logging ):
 			self.killLogging('')
 			self.createExperiment(data.experiment_name, data.description)
